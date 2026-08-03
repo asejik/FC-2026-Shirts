@@ -265,11 +265,11 @@ export default function ProductDetailModal({
               </div>
 
               {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-3 mt-12 mb-8 sm:mt-0 sm:mb-0 sm:pt-2">
+              <div className="flex flex-col sm:flex-row gap-3 pt-4 sm:pt-2">
                 <button
                   onClick={handleAdd}
                   aria-live="polite"
-                  className={`flex-1 h-12 text-sm font-bold rounded-xl border-2 transition-all flex items-center justify-center gap-2 ${
+                  className={`flex-1 h-[60px] sm:h-12 text-base sm:text-sm font-bold rounded-xl border-2 transition-all flex items-center justify-center gap-2 ${
                     added
                       ? 'bg-emerald-600 border-emerald-600 text-white'
                       : 'border-[#c8102e] text-[#c8102e] hover:bg-[#c8102e] hover:text-white'
@@ -285,7 +285,7 @@ export default function ProductDetailModal({
                 </button>
                 <button
                   onClick={handleViewCart}
-                  className="flex-1 h-12 text-sm font-bold bg-[#c8102e] text-white rounded-xl hover:bg-[#a00d24] transition-colors shadow-sm"
+                  className="flex-1 h-[60px] sm:h-12 text-base sm:text-sm font-bold bg-[#c8102e] text-white rounded-xl hover:bg-[#a00d24] transition-colors shadow-sm"
                 >
                   View Cart
                 </button>
