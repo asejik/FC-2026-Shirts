@@ -265,7 +265,7 @@ export default function ProductDetailModal({
               </div>
 
               {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-6 pb-6 sm:pt-2 sm:pb-0">
+              <div className="flex flex-col sm:flex-row gap-3 mt-12 mb-8 sm:mt-0 sm:mb-0 sm:pt-2">
                 <button
                   onClick={handleAdd}
                   aria-live="polite"
