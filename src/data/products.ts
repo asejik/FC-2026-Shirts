@@ -35,9 +35,12 @@ export const PREMIUM_1_TIERS: QualityTier[] = [
   { id: 'prem-1', name: 'Premium', price: 15000 },
 ];
 
-export const PREMIUM_2_TIERS: QualityTier[] = [
-  { id: 'heavy-prem', name: 'Heavy Premium', price: 18000 },
-  { id: 'ultra-prem', name: 'Ultra Premium', price: 26000 },
+export const PREMIUM_2_ULTRA_TIERS: QualityTier[] = [
+  { id: 'ultra-prem', name: 'Ultra Premium', price: 18000 },
+];
+
+export const PREMIUM_2_HEAVY_TIERS: QualityTier[] = [
+  { id: 'heavy-prem', name: 'Heavy Premium', price: 26000 },
 ];
 
 export const products: TShirtOption[] = [
@@ -107,14 +110,14 @@ export const products: TShirtOption[] = [
   },
   // Premium 2
   {
-    id: 'prem-2a',
-    code: 'PRM-2A',
-    name: 'Premium 2a',
+    id: 'prem-2a-ultra',
+    code: 'PRM-2A-ULT',
+    name: 'Premium 2a - Ultra Premium',
     category: 'Premium 2',
     basePrice: 18000,
-    qualityTiers: PREMIUM_2_TIERS,
+    qualityTiers: PREMIUM_2_ULTRA_TIERS,
     sizes: ALL_SIZES,
-    description: 'Premium Option 2a T-shirt available in Heavy Premium and Ultra Premium.',
+    description: 'Premium Option 2a T-shirt in Ultra Premium quality.',
     colors: [
       { name: 'Black', imageFront: '/assets/new/premium 2a - black (front).jpg', imageBack: '/assets/new/premium 2a - black (back).jpg' },
       { name: 'Ash', imageFront: '/assets/new/premium 2a - ash (front).jpg', imageBack: '/assets/new/premium 2a - ash (back).jpg' },
@@ -123,14 +126,46 @@ export const products: TShirtOption[] = [
     ]
   },
   {
-    id: 'prem-2b',
-    code: 'PRM-2B',
-    name: 'Premium 2b',
+    id: 'prem-2a-heavy',
+    code: 'PRM-2A-HVY',
+    name: 'Premium 2a - Heavy Premium',
+    category: 'Premium 2',
+    basePrice: 26000,
+    qualityTiers: PREMIUM_2_HEAVY_TIERS,
+    sizes: ALL_SIZES,
+    description: 'Premium Option 2a T-shirt in Heavy Premium quality.',
+    colors: [
+      { name: 'Black', imageFront: '/assets/new/premium 2a - black (front).jpg', imageBack: '/assets/new/premium 2a - black (back).jpg' },
+      { name: 'Ash', imageFront: '/assets/new/premium 2a - ash (front).jpg', imageBack: '/assets/new/premium 2a - ash (back).jpg' },
+      { name: 'Blue', imageFront: '/assets/new/premium 2a - blue (front).jpg', imageBack: '/assets/new/premium 2a - blue (back).jpg' },
+      { name: 'Orange', imageFront: '/assets/new/premium 2a - orange (front).jpg', imageBack: '/assets/new/premium 2a - orange (back).jpg' },
+    ]
+  },
+  {
+    id: 'prem-2b-ultra',
+    code: 'PRM-2B-ULT',
+    name: 'Premium 2b - Ultra Premium',
     category: 'Premium 2',
     basePrice: 18000,
-    qualityTiers: PREMIUM_2_TIERS,
+    qualityTiers: PREMIUM_2_ULTRA_TIERS,
     sizes: ALL_SIZES,
-    description: 'Premium Option 2b T-shirt available in Heavy Premium and Ultra Premium.',
+    description: 'Premium Option 2b T-shirt in Ultra Premium quality.',
+    colors: [
+      { name: 'Black', imageFront: '/assets/new/premium 2b - black (front).jpg', imageBack: '/assets/new/premium 2b - black (back).jpg' },
+      { name: 'Ash', imageFront: '/assets/new/premium 2b - ash (front).jpg', imageBack: '/assets/new/premium 2b - ash (back).jpg' },
+      { name: 'Blue', imageFront: '/assets/new/premium 2b - blue (front).jpg', imageBack: '/assets/new/premium 2b - blue (back).jpg' },
+      { name: 'Orange', imageFront: '/assets/new/premium 2b - orange (front).jpg', imageBack: '/assets/new/premium 2b - orange (back).jpg' },
+    ]
+  },
+  {
+    id: 'prem-2b-heavy',
+    code: 'PRM-2B-HVY',
+    name: 'Premium 2b - Heavy Premium',
+    category: 'Premium 2',
+    basePrice: 26000,
+    qualityTiers: PREMIUM_2_HEAVY_TIERS,
+    sizes: ALL_SIZES,
+    description: 'Premium Option 2b T-shirt in Heavy Premium quality.',
     colors: [
       { name: 'Black', imageFront: '/assets/new/premium 2b - black (front).jpg', imageBack: '/assets/new/premium 2b - black (back).jpg' },
       { name: 'Ash', imageFront: '/assets/new/premium 2b - ash (front).jpg', imageBack: '/assets/new/premium 2b - ash (back).jpg' },
