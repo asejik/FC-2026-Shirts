@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { X, Plus, Minus } from 'lucide-react';
+import Image from 'next/image';
 import { TShirtOption, TShirtSize, QualityTier } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 
@@ -27,7 +28,7 @@ export default function VariationModal({
     if (product) {
       const defaultTier = product.qualityTiers[0] ?? null;
       setSelectedTier(defaultTier);
-      setSelectedColor(product.colors[0] ?? '');
+      setSelectedColor(product.colors[0]?.name ?? '');
       setQuantities({});
     }
   }, [product]);
@@ -46,12 +47,13 @@ export default function VariationModal({
   if (!isOpen || !product) return null;
 
   const activeTier = selectedTier || product.qualityTiers[0];
-  const color = selectedColor || product.colors[0];
+  const currentColorName = selectedColor || (product.colors.length > 0 ? product.colors[0].name : '');
+  const currentColorObj = product.colors.find(c => c.name === currentColorName) || product.colors[0];
   const hasAny = Object.values(quantities).some((q) => q > 0);
 
   const adjustQty = (size: TShirtSize, delta: number) => {
     if (!activeTier) return;
-    const key = `${activeTier.id}|${color}|${size}`;
+    const key = `${activeTier.id}|${currentColorName}|${size}`;
     setQuantities((prev) => ({
       ...prev,
       [key]: Math.max(0, (prev[key] ?? 0) + delta),
@@ -84,9 +86,16 @@ export default function VariationModal({
       <div className="relative w-full sm:max-w-md bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl animate-fade-up overflow-hidden">
         {/* Header */}
         <div className="flex items-start justify-between px-5 pt-5 pb-4 border-b border-gray-100">
-          <div>
-            <h2 className="font-bold text-gray-900 text-base">Select a variation</h2>
-            <p className="text-xs text-gray-500 mt-0.5">{product.name}</p>
+          <div className="flex gap-3 items-center">
+            {currentColorObj && (
+              <div className="relative w-10 h-10 rounded-md overflow-hidden bg-gray-50 border border-gray-200">
+                <Image src={currentColorObj.imageFront} alt={currentColorName} fill className="object-cover" />
+              </div>
+            )}
+            <div>
+              <h2 className="font-bold text-gray-900 text-base">Select a variation</h2>
+              <p className="text-xs text-gray-500 mt-0.5">{product.name}</p>
+            </div>
           </div>
           <button
             onClick={onClose}
@@ -125,23 +134,30 @@ export default function VariationModal({
           </div>
         )}
 
-        {/* Colour selector (if > 1 colour) */}
-        {product.colors.length > 1 && (
-          <div className="px-5 pt-3 pb-2 border-b border-gray-50 space-y-1.5">
+        {/* Colour selector */}
+        {product.colors.length > 0 && (
+          <div className="px-5 pt-3 pb-2 border-b border-gray-50 space-y-3">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Colour</p>
-            <div className="flex flex-wrap gap-2" role="group" aria-label="Select colour">
+            <div className="flex flex-wrap gap-3" role="group" aria-label="Select colour">
               {product.colors.map((c) => (
                 <button
-                  key={c}
-                  onClick={() => setSelectedColor(c)}
-                  aria-pressed={color === c}
-                  className={`px-3 h-8 text-xs font-semibold rounded-md border transition-colors ${
-                    color === c
-                      ? 'bg-gray-900 text-white border-gray-900'
-                      : 'bg-white text-gray-700 border-gray-300 hover:border-gray-500'
-                  }`}
+                  key={c.name}
+                  onClick={() => setSelectedColor(c.name)}
+                  aria-pressed={currentColorName === c.name}
+                  className="group flex flex-col items-center gap-1.5 focus:outline-none"
                 >
-                  {c}
+                  <div className={`relative w-10 h-10 rounded-full overflow-hidden border-2 transition-all ${
+                    currentColorName === c.name
+                      ? 'border-[#c8102e] shadow-md scale-110'
+                      : 'border-gray-200 opacity-70 group-hover:opacity-100 group-hover:border-gray-300'
+                  }`}>
+                    <Image src={c.imageFront} alt={c.name} fill className="object-cover" />
+                  </div>
+                  <span className={`text-[10px] font-bold ${
+                    currentColorName === c.name ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-700'
+                  }`}>
+                    {c.name}
+                  </span>
                 </button>
               ))}
             </div>
@@ -155,7 +171,7 @@ export default function VariationModal({
           aria-label="Select size and quantity"
         >
           {product.sizes.map((size) => {
-            const qty = quantities[`${activeTier?.id}|${color}|${size}`] ?? 0;
+            const qty = quantities[`${activeTier?.id}|${currentColorName}|${size}`] ?? 0;
             return (
               <div
                 key={size}
@@ -163,7 +179,7 @@ export default function VariationModal({
               >
                 <div>
                   <p className="text-xs font-semibold text-gray-800">
-                    {activeTier?.name} ({color} / {size})
+                    {activeTier?.name} ({currentColorName} / {size})
                   </p>
                   <p className="text-xs text-gray-500 font-medium">
                     ₦{activeTier?.price.toLocaleString()}

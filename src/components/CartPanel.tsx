@@ -85,7 +85,7 @@ export default function CartPanel({
                   {/* Thumbnail */}
                   <div className="relative w-16 h-16 bg-white rounded-lg border border-gray-200 flex-shrink-0 overflow-hidden">
                     <Image
-                      src={item.product.images.front}
+                      src={item.product.colors.find((c) => c.name === item.color)?.imageFront || item.product.colors[0]?.imageFront || ''}
                       alt={item.product.name}
                       fill
                       className="object-contain p-1"

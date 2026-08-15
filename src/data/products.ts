@@ -1,10 +1,16 @@
 export type TShirtSize = 'Small' | 'Medium' | 'Large' | 'XL' | 'XXL';
-export type Category = 'Premium' | 'Standard';
+export type Category = 'Standard' | 'Premium 1' | 'Premium 2';
 
 export interface QualityTier {
   id: string;
   name: string;
   price: number;
+}
+
+export interface ColorOption {
+  name: string;
+  imageFront: string;
+  imageBack?: string;
 }
 
 export interface TShirtOption {
@@ -14,134 +20,122 @@ export interface TShirtOption {
   category: Category;
   basePrice: number;
   qualityTiers: QualityTier[];
-  colors: string[];
+  colors: ColorOption[];
   sizes: TShirtSize[];
   description: string;
-  images: {
-    front: string;
-    back: string;
-  };
 }
 
 export const ALL_SIZES: TShirtSize[] = ['Small', 'Medium', 'Large', 'XL', 'XXL'];
 
-export const PREMIUM_TIERS: QualityTier[] = [
-  { id: 'prem-rn', name: 'Premium Round Neck', price: 15000 },
-  { id: 'heavy-prem-rn', name: 'Heavy Premium Round Neck', price: 18000 },
-  { id: 'ultra-prem-rn', name: 'Ultra Premium Round Neck', price: 26000 },
+export const STANDARD_TIERS: QualityTier[] = [
+  { id: 'std', name: 'Standard', price: 7000 },
 ];
 
-export const STANDARD_TIERS: QualityTier[] = [
-  { id: 'std-rn', name: 'Standard Round Neck', price: 7000 },
+export const PREMIUM_1_TIERS: QualityTier[] = [
+  { id: 'prem-1', name: 'Premium', price: 15000 },
+];
+
+export const PREMIUM_2_TIERS: QualityTier[] = [
+  { id: 'heavy-prem', name: 'Heavy Premium', price: 18000 },
+  { id: 'ultra-prem', name: 'Ultra Premium', price: 26000 },
 ];
 
 export const products: TShirtOption[] = [
-  // Premium Shirt Designs
+  // Standard
   {
-    id: 'premium-option-1',
-    code: 'PRM-OPT-01',
-    name: 'Premium 1',
-    category: 'Premium',
-    basePrice: 15000,
-    qualityTiers: PREMIUM_TIERS,
-    colors: ['Black', 'Orange', 'Ash', 'Blue'],
-    sizes: ALL_SIZES,
-    description: 'Exclusive FC2026 Premium Option 1 design available in Premium, Heavy Premium, and Ultra Premium fabric qualities.',
-    images: {
-      front: '/assets/premium/premium 1 (front).jpg',
-      back: '/assets/premium/premium 1 (back).jpg',
-    },
-  },
-  {
-    id: 'premium-option-2',
-    code: 'PRM-OPT-02',
-    name: 'Premium 2',
-    category: 'Premium',
-    basePrice: 15000,
-    qualityTiers: PREMIUM_TIERS,
-    colors: ['Black', 'Orange', 'Ash', 'Blue'],
-    sizes: ALL_SIZES,
-    description: 'Exclusive FC2026 Premium Option 2 design available in Premium, Heavy Premium, and Ultra Premium fabric qualities.',
-    images: {
-      front: '/assets/premium/premium 2 (front).jpg',
-      back: '/assets/premium/premium 2 (back).jpg',
-    },
-  },
-  {
-    id: 'premium-option-3',
-    code: 'PRM-OPT-03',
-    name: 'Premium 3',
-    category: 'Premium',
-    basePrice: 15000,
-    qualityTiers: PREMIUM_TIERS,
-    colors: ['Black', 'Orange', 'Ash', 'Blue'],
-    sizes: ALL_SIZES,
-    description: 'Exclusive FC2026 Premium Option 3 design available in Premium, Heavy Premium, and Ultra Premium fabric qualities.',
-    images: {
-      front: '/assets/premium/premium 3 (front).jpg',
-      back: '/assets/premium/premium 3 (back).jpg',
-    },
-  },
-
-  // Standard Shirt Designs
-  {
-    id: 'std-round-1',
-    code: 'STD-OPT-01',
+    id: 'std-1',
+    code: 'STD-1',
     name: 'Standard 1',
     category: 'Standard',
     basePrice: 7000,
     qualityTiers: STANDARD_TIERS,
-    colors: ['Black', 'White', 'Orange', 'Navy Blue'],
     sizes: ALL_SIZES,
-    description: 'Classic FC2026 Standard Option 1 T-shirt in crisp white finish.',
-    images: {
-      front: '/assets/standard/standard 1 - white (front).jpg',
-      back: '/assets/standard/standard 1 - white (back).jpg',
-    },
+    description: 'Standard Option 1 T-shirt.',
+    colors: [
+      { name: 'Black', imageFront: '/assets/new/standard 1 - black (front).jpg', imageBack: '/assets/new/standard 1 - black (back).jpg' },
+      { name: 'Navy Blue', imageFront: '/assets/new/standard 1 - navy blue (front).jpg', imageBack: '/assets/new/standard 1 - navy blue (back).jpg' },
+      { name: 'Orange', imageFront: '/assets/new/standard 1 - orange (front).jpg', imageBack: '/assets/new/standard 1 - orange (back).jpg' },
+    ]
   },
   {
-    id: 'std-round-2',
-    code: 'STD-OPT-02',
+    id: 'std-2',
+    code: 'STD-2',
     name: 'Standard 2',
     category: 'Standard',
     basePrice: 7000,
     qualityTiers: STANDARD_TIERS,
-    colors: ['Black', 'White', 'Orange', 'Navy Blue'],
     sizes: ALL_SIZES,
-    description: 'Classic FC2026 Standard Option 2 T-shirt for daily member wear.',
-    images: {
-      front: '/assets/standard/standard 2 - white (front).jpg',
-      back: '/assets/standard/standard 2 - white (back).jpg',
-    },
+    description: 'Standard Option 2 T-shirt.',
+    colors: [
+      { name: 'Black', imageFront: '/assets/new/standard 2 - black (front).jpg', imageBack: '/assets/new/standard 2 - black (back).jpg' },
+      { name: 'Navy Blue', imageFront: '/assets/new/standard 2 - navy blue (front).jpg', imageBack: '/assets/new/standard 2 - navy blue (back).jpg' },
+      { name: 'Orange', imageFront: '/assets/new/standard 2 - orange (front).jpg', imageBack: '/assets/new/standard 2 - orange (back).jpg' },
+    ]
+  },
+  // Premium 1
+  {
+    id: 'prem-1a',
+    code: 'PRM-1A',
+    name: 'Premium 1a',
+    category: 'Premium 1',
+    basePrice: 15000,
+    qualityTiers: PREMIUM_1_TIERS,
+    sizes: ALL_SIZES,
+    description: 'Premium Option 1a T-shirt.',
+    colors: [
+      { name: 'Black', imageFront: '/assets/new/premium 1a - black (front).jpg', imageBack: '/assets/new/premium 1a - black (back).jpg' },
+      { name: 'Grey', imageFront: '/assets/new/premium 1a - grey (front).jpg', imageBack: '/assets/new/premium 1a - grey (back).jpg' },
+      { name: 'Navy Blue', imageFront: '/assets/new/premium 1a - navy blue (front).jpg', imageBack: '/assets/new/premium 1a - navy blue (back).jpg' },
+      { name: 'Orange', imageFront: '/assets/new/premium 1a - orange (front).jpg', imageBack: '/assets/new/premium 1a - orange (back).jpg' },
+    ]
   },
   {
-    id: 'std-round-3',
-    code: 'STD-OPT-03',
-    name: 'Standard 3',
-    category: 'Standard',
-    basePrice: 7000,
-    qualityTiers: STANDARD_TIERS,
-    colors: ['Black', 'White', 'Orange', 'Navy Blue'],
+    id: 'prem-1b',
+    code: 'PRM-1B',
+    name: 'Premium 1b',
+    category: 'Premium 1',
+    basePrice: 15000,
+    qualityTiers: PREMIUM_1_TIERS,
     sizes: ALL_SIZES,
-    description: 'Classic FC2026 Standard Option 3 T-shirt in sleek black finish.',
-    images: {
-      front: '/assets/standard/standard 3 - black (front).jpg',
-      back: '/assets/standard/standard 3 - black (back).jpg',
-    },
+    description: 'Premium Option 1b T-shirt.',
+    colors: [
+      { name: 'Black', imageFront: '/assets/new/premium 1b - black (front).jpg', imageBack: '/assets/new/premium 1b - black (back).jpg' },
+      { name: 'Navy Blue', imageFront: '/assets/new/premium 1b - navy blue (front).jpg', imageBack: '/assets/new/premium 1b - navy blue (back).jpg' },
+      { name: 'Orange', imageFront: '/assets/new/premium 1b - orange (front).jpg', imageBack: '/assets/new/premium 1b - orange (back).jpg' },
+      { name: 'White', imageFront: '/assets/new/premium 1b - white (front).jpg', imageBack: '/assets/new/premium 1b - white (back).jpg' },
+    ]
+  },
+  // Premium 2
+  {
+    id: 'prem-2a',
+    code: 'PRM-2A',
+    name: 'Premium 2a',
+    category: 'Premium 2',
+    basePrice: 18000,
+    qualityTiers: PREMIUM_2_TIERS,
+    sizes: ALL_SIZES,
+    description: 'Premium Option 2a T-shirt available in Heavy Premium and Ultra Premium.',
+    colors: [
+      { name: 'Ash', imageFront: '/assets/new/premium 2a - ash (front).jpg', imageBack: '/assets/new/premium 2a - ash (back).jpg' },
+      { name: 'Black', imageFront: '/assets/new/premium 2a - black (front).jpg', imageBack: '/assets/new/premium 2a - black (back).jpg' },
+      { name: 'Blue', imageFront: '/assets/new/premium 2a - blue (front).jpg', imageBack: '/assets/new/premium 2a - blue (back).jpg' },
+      { name: 'Orange', imageFront: '/assets/new/premium 2a - orange (front).jpg', imageBack: '/assets/new/premium 2a - orange (back).jpg' },
+    ]
   },
   {
-    id: 'std-round-4',
-    code: 'STD-OPT-04',
-    name: 'Standard 4',
-    category: 'Standard',
-    basePrice: 7000,
-    qualityTiers: STANDARD_TIERS,
-    colors: ['Black', 'White', 'Orange', 'Navy Blue'],
+    id: 'prem-2b',
+    code: 'PRM-2B',
+    name: 'Premium 2b',
+    category: 'Premium 2',
+    basePrice: 18000,
+    qualityTiers: PREMIUM_2_TIERS,
     sizes: ALL_SIZES,
-    description: 'Classic FC2026 Standard Option 4 T-shirt with front and back print.',
-    images: {
-      front: '/assets/standard/standard 4 - black (front).jpg',
-      back: '/assets/standard/standard 4 - black (back).jpg',
-    },
-  },
+    description: 'Premium Option 2b T-shirt available in Heavy Premium and Ultra Premium.',
+    colors: [
+      { name: 'Ash', imageFront: '/assets/new/premium 2b - ash (front).jpg', imageBack: '/assets/new/premium 2b - ash (back).jpg' },
+      { name: 'Black', imageFront: '/assets/new/premium 2b - black (front).jpg', imageBack: '/assets/new/premium 2b - black (back).jpg' },
+      { name: 'Blue', imageFront: '/assets/new/premium 2b - blue (front).jpg', imageBack: '/assets/new/premium 2b - blue (back).jpg' },
+      { name: 'Orange', imageFront: '/assets/new/premium 2b - orange (front).jpg', imageBack: '/assets/new/premium 2b - orange (back).jpg' },
+    ]
+  }
 ];

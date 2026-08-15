@@ -15,7 +15,8 @@ interface SidebarFilterProps extends FilterState {
 
 const CATEGORIES = [
   { id: 'All' as const, label: 'All T-Shirts' },
-  { id: 'Premium' as const, label: 'Premium Collection' },
+  { id: 'Premium 1' as const, label: 'Premium 1 Collection' },
+  { id: 'Premium 2' as const, label: 'Premium 2 Collection' },
   { id: 'Standard' as const, label: 'Standard Collection' },
 ];
 

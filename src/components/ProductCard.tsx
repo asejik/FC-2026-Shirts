@@ -31,7 +31,7 @@ export default function ProductCard({
       >
         <div className="absolute inset-0 p-4">
           <Image
-            src={view === 'front' ? product.images.front : product.images.back}
+            src={view === 'front' ? product.colors[0].imageFront : (product.colors[0].imageBack || product.colors[0].imageFront)}
             alt={`${product.name} — ${view} view`}
             fill
             className="object-contain transition-transform duration-300 group-hover:scale-[1.03]"
@@ -70,7 +70,7 @@ export default function ProductCard({
         {/* Category Pill */}
         <span
           className={`self-start text-[10px] font-bold px-2 py-0.5 rounded-full ${
-            product.category === 'Premium'
+            product.category.includes('Premium')
               ? 'bg-amber-50 text-amber-700'
               : 'bg-blue-50 text-blue-700'
           }`}
@@ -89,7 +89,7 @@ export default function ProductCard({
         {/* Price */}
         <div className="flex items-baseline gap-2 mt-auto">
           <span className="text-base font-extrabold text-gray-900">
-            {product.category === 'Premium' ? 'From ' : ''}₦{product.basePrice.toLocaleString()}
+            {product.category.includes('Premium') ? 'From ' : ''}₦{product.basePrice.toLocaleString()}
           </span>
         </div>
 

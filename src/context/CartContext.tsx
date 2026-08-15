@@ -40,7 +40,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     color?: string,
     qtyToAdd: number = 1
   ) => {
-    const selectedColor = color || product.colors[0] || 'Standard';
+    const selectedColor = color || (product.colors.length > 0 ? product.colors[0].name : 'Standard');
     const itemId = `${product.id}-${tier.id}-${selectedColor}-${size}`;
 
     setItems((prev) => {

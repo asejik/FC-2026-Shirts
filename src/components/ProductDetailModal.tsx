@@ -32,7 +32,7 @@ export default function ProductDetailModal({
     if (product) {
       const defaultTier = product.qualityTiers[0] ?? null;
       setSelectedTier(defaultTier);
-      setColor(product.colors[0] ?? '');
+      setColor(product.colors[0]?.name ?? '');
       setSize(product.sizes[1] ?? product.sizes[0]);
       setQty(1);
       setView('front');
@@ -52,11 +52,12 @@ export default function ProductDetailModal({
   if (!isOpen || !product) return null;
 
   const activeTier = selectedTier || product.qualityTiers[0];
-  const currentColor = color || product.colors[0];
+  const currentColorName = color || (product.colors.length > 0 ? product.colors[0].name : '');
+  const currentColorObj = product.colors.find(c => c.name === currentColorName) || product.colors[0];
 
   const handleAdd = () => {
     if (!activeTier) return;
-    addToCart(product, activeTier, size, currentColor, qty);
+    addToCart(product, activeTier, size, currentColorName, qty);
     setAdded(true);
     setTimeout(() => setAdded(false), 2500);
   };
@@ -95,7 +96,7 @@ export default function ProductDetailModal({
               {/* Main image */}
               <div className="relative aspect-square rounded-xl overflow-hidden border border-gray-200 bg-white">
                 <Image
-                  src={view === 'front' ? product.images.front : product.images.back}
+                  src={view === 'front' ? currentColorObj.imageFront : (currentColorObj.imageBack || currentColorObj.imageFront)}
                   alt={`${product.name} ${view} view`}
                   fill
                   className="object-contain p-6"
@@ -119,7 +120,7 @@ export default function ProductDetailModal({
                     }`}
                   >
                     <Image
-                      src={v === 'front' ? product.images.front : product.images.back}
+                      src={v === 'front' ? currentColorObj.imageFront : (currentColorObj.imageBack || currentColorObj.imageFront)}
                       alt={`${v} thumbnail`}
                       fill
                       className="object-contain p-1"
@@ -138,7 +139,7 @@ export default function ProductDetailModal({
               <div>
                 <span
                   className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
-                    product.category === 'Premium'
+                    product.category.includes('Premium')
                       ? 'bg-amber-50 text-amber-700'
                       : 'bg-blue-50 text-blue-700'
                   }`}
@@ -188,26 +189,33 @@ export default function ProductDetailModal({
 
               {/* Colour */}
               {product.colors.length > 0 && (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                     Colour:{' '}
                     <span className="text-gray-800 font-semibold normal-case">
-                      {currentColor}
+                      {currentColorName}
                     </span>
                   </p>
-                  <div className="flex flex-wrap gap-2" role="group" aria-label="Select colour">
+                  <div className="flex flex-wrap gap-3" role="group" aria-label="Select colour">
                     {product.colors.map((c) => (
                       <button
-                        key={c}
-                        onClick={() => setColor(c)}
-                        aria-pressed={currentColor === c}
-                        className={`px-3 h-9 text-xs font-semibold rounded-lg border transition-colors ${
-                          currentColor === c
-                            ? 'bg-gray-900 text-white border-gray-900'
-                            : 'bg-white text-gray-700 border-gray-300 hover:border-gray-500'
-                        }`}
+                        key={c.name}
+                        onClick={() => setColor(c.name)}
+                        aria-pressed={currentColorName === c.name}
+                        className="group flex flex-col items-center gap-1.5 focus:outline-none"
                       >
-                        {c}
+                        <div className={`relative w-12 h-12 rounded-full overflow-hidden border-2 transition-all ${
+                          currentColorName === c.name
+                            ? 'border-[#c8102e] shadow-md scale-110'
+                            : 'border-gray-200 opacity-70 group-hover:opacity-100 group-hover:border-gray-300'
+                        }`}>
+                          <Image src={c.imageFront} alt={c.name} fill className="object-cover" />
+                        </div>
+                        <span className={`text-[10px] font-bold ${
+                          currentColorName === c.name ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-700'
+                        }`}>
+                          {c.name}
+                        </span>
                       </button>
                     ))}
                   </div>
