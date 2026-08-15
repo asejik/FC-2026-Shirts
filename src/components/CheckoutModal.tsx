@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { X, CheckCircle, AlertCircle, ShieldCheck, Loader2 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useMutation } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface CheckoutModalProps {
 
 export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const { items, totalPrice, totalItems, clearCart } = useCart();
+  const { campus } = useParams() as { campus: string };
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -68,7 +70,7 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    mutation.mutate({ name, email, date, itemsString, totalItems, totalPrice });
+    mutation.mutate({ name, email, date, itemsString, totalItems, totalPrice, campus });
   };
 
   return (

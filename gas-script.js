@@ -15,19 +15,85 @@
 // ==============================================================================
 
 const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE'; 
-const SHEET_NAME = 'Sheet1';
+
+const CAMPUS_CONFIG = {
+  'ilorin': {
+    sheetName: 'Ilorin',
+    whatsapp: '2348132191839',
+    bank: 'Access Bank',
+    accountNumber: '1219660247',
+    accountName: 'David Boluwatife Ipinyomi'
+  },
+  'lagos': {
+    sheetName: 'Lagos',
+    whatsapp: '2348132191839', // Placeholder
+    bank: 'Pending Bank',
+    accountNumber: '0000000000',
+    accountName: 'Pending Lagos Acc'
+  },
+  'ogbomosho': {
+    sheetName: 'Ogbomosho',
+    whatsapp: '2348132191839', // Placeholder
+    bank: 'Pending Bank',
+    accountNumber: '0000000000',
+    accountName: 'Pending Ogbomosho Acc'
+  },
+  'ibadan': {
+    sheetName: 'Ibadan',
+    whatsapp: '2348132191839', // Placeholder
+    bank: 'Pending Bank',
+    accountNumber: '0000000000',
+    accountName: 'Pending Ibadan Acc'
+  },
+  'abuja': {
+    sheetName: 'Abuja',
+    whatsapp: '2348132191839', // Placeholder
+    bank: 'Pending Bank',
+    accountNumber: '0000000000',
+    accountName: 'Pending Abuja Acc'
+  },
+  'osogobo': {
+    sheetName: 'Osogobo',
+    whatsapp: '2348132191839', // Placeholder
+    bank: 'Pending Bank',
+    accountNumber: '0000000000',
+    accountName: 'Pending Osogobo Acc'
+  },
+  'uyo': {
+    sheetName: 'Uyo',
+    whatsapp: '2348132191839', // Placeholder
+    bank: 'Pending Bank',
+    accountNumber: '0000000000',
+    accountName: 'Pending Uyo Acc'
+  },
+  'akure': {
+    sheetName: 'Akure',
+    whatsapp: '2348132191839', // Placeholder
+    bank: 'Pending Bank',
+    accountNumber: '0000000000',
+    accountName: 'Pending Akure Acc'
+  }
+};
 
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
-    const { name, email, date, itemsString, totalItems, totalPrice } = data;
+    const { name, email, date, itemsString, totalItems, totalPrice, campus } = data;
+    
+    // Default to 'ilorin' if campus is not provided or not found
+    const campusKey = (campus || 'ilorin').toLowerCase();
+    const config = CAMPUS_CONFIG[campusKey] || CAMPUS_CONFIG['ilorin'];
 
     // 1. Log order to Google Sheet
     const ss = SHEET_ID && SHEET_ID !== 'YOUR_GOOGLE_SHEET_ID_HERE' 
       ? SpreadsheetApp.openById(SHEET_ID) 
       : SpreadsheetApp.getActiveSpreadsheet();
       
-    let sheet = ss.getSheetByName(SHEET_NAME) || ss.getSheets()[0];
+    // Try to get sheet by name, or create it if it doesn't exist
+    let sheet = ss.getSheetByName(config.sheetName);
+    if (!sheet) {
+      sheet = ss.insertSheet(config.sheetName);
+    }
 
     // Create column headers if the sheet is brand new/empty
     if (sheet.getLastRow() === 0) {
@@ -80,9 +146,9 @@ function doPost(e) {
 
     const formattedTotalPrice = Number(totalPrice).toLocaleString();
     const encodedName = encodeURIComponent(name);
-    const whatsappUrl = `https://wa.me/2348132191839?text=Hello%2C%20I%20have%20completed%20the%20payment%20for%20my%20FC2026%20T-Shirt%20order%20(${encodedName}).%20Here%20is%20my%20receipt:`;
+    const whatsappUrl = \`https://wa.me/\${config.whatsapp}?text=Hello%2C%20I%20have%20completed%20the%20payment%20for%20my%20FC2026%20T-Shirt%20order%20(\${encodedName}).%20Here%20is%20my%20receipt:\`;
 
-    const htmlBody = `
+    const htmlBody = \`
       <!DOCTYPE html>
       <html lang="en">
       <head>
@@ -111,7 +177,7 @@ function doPost(e) {
                 <tr>
                   <td style="padding: 32px 24px;">
                     
-                    <h2 style="margin: 0 0 12px 0; color: #0f172a; font-size: 18px; font-weight: 700;">Hello ${escapeHtml(name)},</h2>
+                    <h2 style="margin: 0 0 12px 0; color: #0f172a; font-size: 18px; font-weight: 700;">Hello \${escapeHtml(name)},</h2>
                     <p style="margin: 0 0 24px 0; color: #475569; font-size: 14px; line-height: 1.6;">
                       Thank you for selecting your FC2026 T-shirts! We have successfully recorded your order intent. Below is a summary of your chosen options and instructions to complete your payment.
                     </p>
@@ -121,17 +187,17 @@ function doPost(e) {
                       <h3 style="margin: 0 0 14px 0; color: #0f172a; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Order Summary</h3>
                       
                       <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 16px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;">
-                        ${itemsListHtml}
+                        \${itemsListHtml}
                       </table>
 
                       <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td style="font-size: 14px; color: #64748b; font-weight: 500;">Total Quantity:</td>
-                          <td align="right" style="font-size: 14px; color: #0f172a; font-weight: 700;">${totalItems} unit(s)</td>
+                          <td align="right" style="font-size: 14px; color: #0f172a; font-weight: 700;">\${totalItems} unit(s)</td>
                         </tr>
                         <tr>
                           <td style="font-size: 16px; color: #0f172a; font-weight: 700; padding-top: 8px;">Total Amount:</td>
-                          <td align="right" style="font-size: 20px; color: #c8102e; font-weight: 800; padding-top: 8px;">₦${formattedTotalPrice}</td>
+                          <td align="right" style="font-size: 20px; color: #c8102e; font-weight: 800; padding-top: 8px;">₦\${formattedTotalPrice}</td>
                         </tr>
                       </table>
                     </div>
@@ -145,15 +211,15 @@ function doPost(e) {
                       <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-size: 14px; color: #334155; line-height: 1.8;">
                         <tr>
                           <td style="color: #64748b; width: 130px;">Bank Name:</td>
-                          <td style="font-weight: 700; color: #0f172a;">Access Bank</td>
+                          <td style="font-weight: 700; color: #0f172a;">\${config.bank}</td>
                         </tr>
                         <tr>
                           <td style="color: #64748b;">Account Number:</td>
-                          <td style="font-weight: 800; color: #c8102e; font-size: 16px;">1219660247</td>
+                          <td style="font-weight: 800; color: #c8102e; font-size: 16px;">\${config.accountNumber}</td>
                         </tr>
                         <tr>
                           <td style="color: #64748b;">Account Name:</td>
-                          <td style="font-weight: 700; color: #0f172a;">David Boluwatife Ipinyomi</td>
+                          <td style="font-weight: 700; color: #0f172a;">\${config.accountName}</td>
                         </tr>
                       </table>
                     </div>
@@ -165,8 +231,8 @@ function doPost(e) {
                         Once payment is made, please send your transfer receipt screenshot to us on WhatsApp to confirm your order.
                       </p>
                       
-                      <a href="${whatsappUrl}" target="_blank" style="display: inline-block; background-color: #25D366; color: #ffffff; font-weight: 700; font-size: 14px; padding: 14px 28px; border-radius: 10px; text-decoration: none; box-shadow: 0 2px 6px rgba(37, 211, 102, 0.3);">
-                        📲 Send Receipt on WhatsApp (+2348132191839)
+                      <a href="\${whatsappUrl}" target="_blank" style="display: inline-block; background-color: #25D366; color: #ffffff; font-weight: 700; font-size: 14px; padding: 14px 28px; border-radius: 10px; text-decoration: none; box-shadow: 0 2px 6px rgba(37, 211, 102, 0.3);">
+                        📲 Send Receipt on WhatsApp (+\${config.whatsapp})
                       </a>
                     </div>
 
@@ -190,12 +256,12 @@ function doPost(e) {
         </table>
       </body>
       </html>
-    `;
+    \`;
 
     // Send HTML Email using GmailApp / MailApp
     MailApp.sendEmail({
       to: email,
-      subject: `FC2026 T-Shirt Order Confirmation - ${name}`,
+      subject: \`FC2026 T-Shirt Order Confirmation - \${name}\`,
       name: 'FC2026 T-SHIRT SHOWCASE',
       htmlBody: htmlBody
     });
