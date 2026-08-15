@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ShoppingBag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useParams } from 'next/navigation';
 
 interface HeaderProps {
   onOpenCart: () => void;
@@ -13,6 +14,8 @@ interface HeaderProps {
 
 export default function Header({ onOpenCart, searchQuery, setSearchQuery }: HeaderProps) {
   const { totalItems } = useCart();
+  const params = useParams();
+  const campus = params?.campus as string | undefined;
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
@@ -25,8 +28,17 @@ export default function Header({ onOpenCart, searchQuery, setSearchQuery }: Head
               <span className="text-white font-black text-sm leading-none">FC</span>
             </div>
             <div className="hidden sm:block leading-none">
-              <p className="font-extrabold text-gray-900 text-[15px] tracking-tight">FC2026</p>
-              <p className="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Change Campus</p>
+              <div className="flex items-center gap-1.5">
+                <p className="font-extrabold text-gray-900 text-[15px] tracking-tight">FC2026</p>
+                {campus && (
+                  <span className="px-1.5 py-0.5 rounded bg-red-50 text-[#c8102e] text-[9px] font-bold uppercase tracking-wider">
+                    {campus}
+                  </span>
+                )}
+              </div>
+              <p className="text-[10px] text-gray-500 font-semibold flex items-center gap-1 uppercase tracking-widest mt-1 hover:text-gray-700 transition-colors">
+                <span>← Change Campus</span>
+              </p>
             </div>
           </Link>
 
