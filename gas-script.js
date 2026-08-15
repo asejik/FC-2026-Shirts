@@ -196,6 +196,7 @@ function doPost(e) {
     MailApp.sendEmail({
       to: email,
       subject: `FC2026 T-Shirt Order Confirmation - ${name}`,
+      name: 'FC2026 T-SHIRT SHOWCASE',
       htmlBody: htmlBody
     });
 
