@@ -116,8 +116,8 @@ export const products: TShirtOption[] = [
     sizes: ALL_SIZES,
     description: 'Premium Option 2a T-shirt available in Heavy Premium and Ultra Premium.',
     colors: [
-      { name: 'Ash', imageFront: '/assets/new/premium 2a - ash (front).jpg', imageBack: '/assets/new/premium 2a - ash (back).jpg' },
       { name: 'Black', imageFront: '/assets/new/premium 2a - black (front).jpg', imageBack: '/assets/new/premium 2a - black (back).jpg' },
+      { name: 'Ash', imageFront: '/assets/new/premium 2a - ash (front).jpg', imageBack: '/assets/new/premium 2a - ash (back).jpg' },
       { name: 'Blue', imageFront: '/assets/new/premium 2a - blue (front).jpg', imageBack: '/assets/new/premium 2a - blue (back).jpg' },
       { name: 'Orange', imageFront: '/assets/new/premium 2a - orange (front).jpg', imageBack: '/assets/new/premium 2a - orange (back).jpg' },
     ]
@@ -132,8 +132,8 @@ export const products: TShirtOption[] = [
     sizes: ALL_SIZES,
     description: 'Premium Option 2b T-shirt available in Heavy Premium and Ultra Premium.',
     colors: [
-      { name: 'Ash', imageFront: '/assets/new/premium 2b - ash (front).jpg', imageBack: '/assets/new/premium 2b - ash (back).jpg' },
       { name: 'Black', imageFront: '/assets/new/premium 2b - black (front).jpg', imageBack: '/assets/new/premium 2b - black (back).jpg' },
+      { name: 'Ash', imageFront: '/assets/new/premium 2b - ash (front).jpg', imageBack: '/assets/new/premium 2b - ash (back).jpg' },
       { name: 'Blue', imageFront: '/assets/new/premium 2b - blue (front).jpg', imageBack: '/assets/new/premium 2b - blue (back).jpg' },
       { name: 'Orange', imageFront: '/assets/new/premium 2b - orange (front).jpg', imageBack: '/assets/new/premium 2b - orange (back).jpg' },
     ]

@@ -89,7 +89,7 @@ export default function ProductCard({
         {/* Price */}
         <div className="flex items-baseline gap-2 mt-auto">
           <span className="text-base font-extrabold text-gray-900">
-            {product.category.includes('Premium') ? 'From ' : ''}₦{product.basePrice.toLocaleString()}
+            {product.qualityTiers.length > 1 ? 'From ' : ''}₦{product.basePrice.toLocaleString()}
           </span>
         </div>
 
