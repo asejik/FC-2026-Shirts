@@ -36,11 +36,11 @@ export const PREMIUM_1_TIERS: QualityTier[] = [
 ];
 
 export const PREMIUM_2_ULTRA_TIERS: QualityTier[] = [
-  { id: 'ultra-prem', name: 'Ultra Premium', price: 18000 },
+  { id: 'ultra-prem', name: 'Ultra Premium', price: 26000 },
 ];
 
 export const PREMIUM_2_HEAVY_TIERS: QualityTier[] = [
-  { id: 'heavy-prem', name: 'Heavy Premium', price: 26000 },
+  { id: 'heavy-prem', name: 'Heavy Premium', price: 18000 },
 ];
 
 export const products: TShirtOption[] = [
@@ -114,7 +114,7 @@ export const products: TShirtOption[] = [
     code: 'PRM-2A-ULT',
     name: 'Premium 2a - Ultra Premium',
     category: 'Premium 2',
-    basePrice: 18000,
+    basePrice: 26000,
     qualityTiers: PREMIUM_2_ULTRA_TIERS,
     sizes: ALL_SIZES,
     description: 'Premium Option 2a T-shirt in Ultra Premium quality.',
@@ -130,7 +130,7 @@ export const products: TShirtOption[] = [
     code: 'PRM-2A-HVY',
     name: 'Premium 2a - Heavy Premium',
     category: 'Premium 2',
-    basePrice: 26000,
+    basePrice: 18000,
     qualityTiers: PREMIUM_2_HEAVY_TIERS,
     sizes: ALL_SIZES,
     description: 'Premium Option 2a T-shirt in Heavy Premium quality.',
@@ -146,7 +146,7 @@ export const products: TShirtOption[] = [
     code: 'PRM-2B-ULT',
     name: 'Premium 2b - Ultra Premium',
     category: 'Premium 2',
-    basePrice: 18000,
+    basePrice: 26000,
     qualityTiers: PREMIUM_2_ULTRA_TIERS,
     sizes: ALL_SIZES,
     description: 'Premium Option 2b T-shirt in Ultra Premium quality.',
@@ -162,7 +162,7 @@ export const products: TShirtOption[] = [
     code: 'PRM-2B-HVY',
     name: 'Premium 2b - Heavy Premium',
     category: 'Premium 2',
-    basePrice: 26000,
+    basePrice: 18000,
     qualityTiers: PREMIUM_2_HEAVY_TIERS,
     sizes: ALL_SIZES,
     description: 'Premium Option 2b T-shirt in Heavy Premium quality.',
