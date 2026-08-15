@@ -8,7 +8,7 @@ const CAMPUSES = [
   { id: 'ogbomosho', name: 'Ogbomosho' },
   { id: 'ibadan', name: 'Ibadan' },
   { id: 'abuja', name: 'Abuja' },
-  { id: 'osogobo', name: 'Osogobo' },
+  { id: 'osogbo', name: 'Osogbo' },
   { id: 'uyo', name: 'Uyo' },
   { id: 'akure', name: 'Akure' },
 ];

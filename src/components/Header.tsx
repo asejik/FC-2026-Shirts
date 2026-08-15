@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { ShoppingBag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 
@@ -19,15 +20,15 @@ export default function Header({ onOpenCart, searchQuery, setSearchQuery }: Head
         <div className="h-16 flex items-center gap-3 sm:gap-4">
 
           {/* ── Brand ────────────────────────────────── */}
-          <div className="flex items-center gap-2.5 flex-shrink-0 select-none">
+          <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 select-none hover:opacity-80 transition-opacity" title="Change Campus">
             <div className="w-8 h-8 rounded-md bg-[#c8102e] flex items-center justify-center shadow-sm">
               <span className="text-white font-black text-sm leading-none">FC</span>
             </div>
             <div className="hidden sm:block leading-none">
               <p className="font-extrabold text-gray-900 text-[15px] tracking-tight">FC2026</p>
-              <p className="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">T-Shirt Showcase</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Change Campus</p>
             </div>
-          </div>
+          </Link>
 
           {/* ── Search ───────────────────────────────── */}
           <div className="flex-1 min-w-0">
