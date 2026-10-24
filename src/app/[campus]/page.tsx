@@ -22,6 +22,30 @@ export default function Home() {
   const [variationProduct, setVariationProduct] = useState<TShirtOption | null>(null);
   const [detailProduct,    setDetailProduct]    = useState<TShirtOption | null>(null);
 
+  if (campus === 'ogbomosho') {
+    if (typeof window !== 'undefined') {
+      window.location.replace('https://fc-ogbomosho.vercel.app/');
+    }
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+        <div className="text-center space-y-4 max-w-md">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 capitalize tracking-tight">
+            Ogbomosho Campus
+          </h1>
+          <p className="text-lg text-gray-500">
+            Redirecting to the Ogbomosho campus store...
+          </p>
+          <a 
+            href="https://fc-ogbomosho.vercel.app/" 
+            className="mt-6 inline-block px-6 py-3 bg-[#c8102e] hover:bg-[#a00d24] text-white rounded-xl font-bold transition-colors shadow-sm"
+          >
+            Go to Ogbomosho Store
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   if (campus !== 'ilorin') {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">

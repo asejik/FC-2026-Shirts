@@ -5,7 +5,7 @@ import { MapPin } from 'lucide-react';
 const CAMPUSES = [
   { id: 'ilorin', name: 'Ilorin' },
   { id: 'lagos', name: 'Lagos' },
-  { id: 'ogbomosho', name: 'Ogbomosho' },
+  { id: 'ogbomosho', name: 'Ogbomosho', url: 'https://fc-ogbomosho.vercel.app/' },
   { id: 'ibadan', name: 'Ibadan' },
   { id: 'abuja', name: 'Abuja' },
   { id: 'osogbo', name: 'Osogbo' },
@@ -36,7 +36,7 @@ export default function CampusSelector() {
           {CAMPUSES.map((campus) => (
             <Link
               key={campus.id}
-              href={`/${campus.id}`}
+              href={campus.url || `/${campus.id}`}
               className="group relative bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-[#c8102e] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center gap-3 active:scale-[0.98]"
             >
               <div className="w-12 h-12 rounded-full bg-gray-50 group-hover:bg-red-50 flex items-center justify-center transition-colors">
