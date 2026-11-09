@@ -23,15 +23,15 @@ export default function VariationModal({
   const [selectedTier, setSelectedTier] = useState<QualityTier | null>(null);
   const [selectedColor, setSelectedColor] = useState('');
   const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const [prevProductId, setPrevProductId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (product) {
-      const defaultTier = product.qualityTiers[0] ?? null;
-      setSelectedTier(defaultTier);
-      setSelectedColor(product.colors[0]?.name ?? '');
-      setQuantities({});
-    }
-  }, [product]);
+  if (product && product.id !== prevProductId) {
+    setPrevProductId(product.id);
+    const defaultTier = product.qualityTiers[0] ?? null;
+    setSelectedTier(defaultTier);
+    setSelectedColor(product.colors[0]?.name ?? '');
+    setQuantities({});
+  }
 
   // Close on Escape
   useEffect(() => {

@@ -4,6 +4,8 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { X, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useParams } from 'next/navigation';
+import { isIlorinRegistrationClosed } from '@/data/deadlines';
 
 interface CartPanelProps {
   isOpen: boolean;
@@ -18,6 +20,9 @@ export default function CartPanel({
 }: CartPanelProps) {
   const { items, updateQuantity, removeFromCart, clearCart, totalPrice, totalItems } =
     useCart();
+  const params = useParams();
+  const campus = params?.campus as string | undefined;
+  const isIlorinClosed = campus === 'ilorin' && isIlorinRegistrationClosed();
 
   // Escape to close
   useEffect(() => {
@@ -167,12 +172,14 @@ export default function CartPanel({
             </div>
             <button
               onClick={() => {
+                if (isIlorinClosed) return;
                 onClose();
                 onOpenCheckout();
               }}
-              className="w-full h-12 bg-[#c8102e] hover:bg-[#a00d24] text-white font-bold text-sm rounded-xl transition-colors shadow-sm"
+              disabled={isIlorinClosed}
+              className="w-full h-12 bg-[#c8102e] hover:bg-[#a00d24] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-sm rounded-xl transition-colors shadow-sm"
             >
-              Proceed to Order Intent
+              {isIlorinClosed ? 'Registration Closed' : 'Proceed to Order Intent'}
             </button>
           </div>
         )}

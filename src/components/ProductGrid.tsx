@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { products, TShirtOption, Category, TShirtSize } from '@/data/products';
+import { products, TShirtOption, Category } from '@/data/products';
 import ProductCard from './ProductCard';
 import SidebarFilter from './SidebarFilter';
 import MobileFilterDrawer from './MobileFilterDrawer';

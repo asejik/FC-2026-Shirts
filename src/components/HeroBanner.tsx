@@ -17,7 +17,7 @@ export default function HeroBanner() {
             </h1>
             <p className="text-sm sm:text-base text-white/70 leading-relaxed max-w-md">
               Browse our Premium and Standard round neck T-shirts, pick your
-              size and colour, then submit your order — we'll send payment
+              size and colour, then submit your order — we&apos;ll send payment
               details straight to your email.
             </p>
           </div>

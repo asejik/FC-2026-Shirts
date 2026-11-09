@@ -5,6 +5,7 @@ import { X, CheckCircle, AlertCircle, ShieldCheck, Loader2 } from 'lucide-react'
 import { useCart } from '@/context/CartContext';
 import { useMutation } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
+import { isIlorinRegistrationClosed, ILORIN_DEADLINE_FORMATTED } from '@/data/deadlines';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -29,8 +30,16 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     return () => document.removeEventListener('keydown', onKey);
   }, [isOpen, onClose]);
 
+  const isIlorinClosed = campus === 'ilorin' && isIlorinRegistrationClosed();
+
   const mutation = useMutation({
     mutationFn: async (payload: object) => {
+      if (campus === 'ilorin' && isIlorinRegistrationClosed()) {
+        throw new Error(
+          `Registration and ordering for Ilorin campus closed on ${ILORIN_DEADLINE_FORMATTED}. No new orders can be submitted.`
+        );
+      }
+
       const url = process.env.NEXT_PUBLIC_GAS_URL;
       if (!url || url === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL') {
         throw new Error(
@@ -52,6 +61,10 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   if (!isOpen) return null;
 
   const validate = () => {
+    if (isIlorinClosed) {
+      setErrors({ name: `Registration for Ilorin closed on ${ILORIN_DEADLINE_FORMATTED}.` });
+      return false;
+    }
     const e: typeof errors = {};
     if (!name.trim()) e.name = 'Full name is required.';
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
@@ -69,7 +82,7 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
+    if (isIlorinClosed || !validate()) return;
     mutation.mutate({ name, email, date, itemsString, totalItems, totalPrice, campus });
   };
 
@@ -141,6 +154,21 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           ) : (
             /* ── Form ──── */
             <form onSubmit={handleSubmit} noValidate className="space-y-4">
+              {isIlorinClosed && (
+                <div
+                  role="alert"
+                  className="flex items-start gap-2.5 bg-red-50 border border-red-200 text-red-700 rounded-xl p-3.5 text-xs font-medium animate-fade-up"
+                >
+                  <AlertCircle size={16} className="flex-shrink-0 mt-0.5 text-red-600" />
+                  <div>
+                    <p className="font-bold text-red-900">Registration Closed</p>
+                    <p className="mt-0.5 text-red-700 leading-relaxed">
+                      Registration for Ilorin campus closed on {ILORIN_DEADLINE_FORMATTED}. Orders are no longer accepted.
+                    </p>
+                  </div>
+                </div>
+              )}
+
               {/* Full name */}
               <div className="space-y-1">
                 <label
@@ -271,13 +299,15 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
               {/* Submit */}
               <button
                 type="submit"
-                disabled={mutation.isPending || items.length === 0}
-                className="w-full h-12 bg-[#c8102e] hover:bg-[#a00d24] disabled:opacity-50 text-white font-bold text-sm rounded-xl transition-colors flex items-center justify-center gap-2 shadow-sm"
+                disabled={mutation.isPending || items.length === 0 || isIlorinClosed}
+                className="w-full h-12 bg-[#c8102e] hover:bg-[#a00d24] disabled:opacity-50 text-white font-bold text-sm rounded-xl transition-colors flex items-center justify-center gap-2 shadow-sm disabled:cursor-not-allowed"
               >
                 {mutation.isPending ? (
                   <>
                     <Loader2 size={16} className="animate-spin" /> Submitting…
                   </>
+                ) : isIlorinClosed ? (
+                  'Registration Closed'
                 ) : (
                   'Submit & Receive Payment Details'
                 )}

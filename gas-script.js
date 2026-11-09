@@ -1,6 +1,5 @@
 // ==============================================================================
 // GOOGLE APPS SCRIPT FOR FC2026 T-SHIRT SHOWCASE WEBHOOK
-// ==============================================================================
 // Instructions:
 // 1. Open your Google Sheet where orders should be logged.
 // 2. Click "Extensions" -> "Apps Script" (or go to script.google.com).
@@ -83,6 +82,16 @@ function doPost(e) {
     // Default to 'ilorin' if campus is not provided or not found
     const campusKey = (campus || 'ilorin').toLowerCase();
     const config = CAMPUS_CONFIG[campusKey] || CAMPUS_CONFIG['ilorin'];
+
+    // Registration deadline enforcement for Ilorin Campus:
+    // Closes Monday, November 9, 2026 at 08:00:00 WAT (07:00:00 UTC)
+    const ILORIN_DEADLINE_MS = new Date('2026-11-09T07:00:00Z').getTime();
+    if (campusKey === 'ilorin' && new Date().getTime() >= ILORIN_DEADLINE_MS) {
+      return ContentService.createTextOutput(JSON.stringify({
+        status: 'error',
+        message: 'Registration and ordering for Ilorin campus closed on Monday, November 9, 2026 at 8:00 AM WAT. Orders are no longer being accepted.'
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
 
     // 1. Log order to Google Sheet
     const ss = SHEET_ID && SHEET_ID !== 'YOUR_GOOGLE_SHEET_ID_HERE' 

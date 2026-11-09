@@ -27,18 +27,18 @@ export default function ProductDetailModal({
   const [size, setSize] = useState<TShirtSize>('Medium');
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  const [prevProductId, setPrevProductId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (product) {
-      const defaultTier = product.qualityTiers[0] ?? null;
-      setSelectedTier(defaultTier);
-      setColor(product.colors[0]?.name ?? '');
-      setSize(product.sizes[1] ?? product.sizes[0]);
-      setQty(1);
-      setView('front');
-      setAdded(false);
-    }
-  }, [product]);
+  if (product && product.id !== prevProductId) {
+    setPrevProductId(product.id);
+    const defaultTier = product.qualityTiers[0] ?? null;
+    setSelectedTier(defaultTier);
+    setColor(product.colors[0]?.name ?? '');
+    setSize(product.sizes[1] ?? product.sizes[0]);
+    setQty(1);
+    setView('front');
+    setAdded(false);
+  }
 
   // Escape to close
   useEffect(() => {
