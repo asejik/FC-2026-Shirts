@@ -17,11 +17,13 @@ import {
 } from '@/data/deadlines';
 import { Clock, MessageCircle, AlertTriangle, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 
 export default function Home() {
   const { campus } = useParams() as { campus: string };
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const isPreview = searchParams.get('preview') === 'true' || searchParams.get('admin') === 'true';
   const [searchQuery,      setSearchQuery]      = useState('');
   const [isCartOpen,       setIsCartOpen]       = useState(false);
   const [isCheckoutOpen,   setIsCheckoutOpen]   = useState(false);
@@ -36,7 +38,7 @@ export default function Home() {
     getIlorinClosedSnapshot
   );
 
-  const isIlorinClosed = campus === 'ilorin' && (isClientClockClosed || serverVerifiedClosed);
+  const isIlorinClosed = campus === 'ilorin' && !isPreview && (isClientClockClosed || serverVerifiedClosed);
 
   useEffect(() => {
     if (campus !== 'ilorin') return;
@@ -176,14 +178,22 @@ export default function Home() {
       />
 
       {/* Notice Banner */}
-      <div className="bg-amber-500 text-amber-950 px-4 py-2 text-xs sm:text-sm font-semibold border-b border-amber-600/20">
-        <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 text-center">
-          <AlertTriangle size={16} className="flex-shrink-0" />
-          <span>
-            Notice: Registration for Ilorin Campus closes <strong>{ILORIN_DEADLINE_FORMATTED}</strong>. Complete your order before the deadline!
-          </span>
+      {isPreview ? (
+        <div className="bg-indigo-600 text-white px-4 py-2 text-xs sm:text-sm font-semibold border-b border-indigo-700 shadow-sm">
+          <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 text-center">
+            <span>👁️ Preview Mode: Viewing Ilorin Campus catalog (Registration is closed for the public)</span>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="bg-amber-500 text-amber-950 px-4 py-2 text-xs sm:text-sm font-semibold border-b border-amber-600/20">
+          <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 text-center">
+            <AlertTriangle size={16} className="flex-shrink-0" />
+            <span>
+              Notice: Registration for Ilorin Campus closes <strong>{ILORIN_DEADLINE_FORMATTED}</strong>. Complete your order before the deadline!
+            </span>
+          </div>
+        </div>
+      )}
 
       <HeroBanner />
 
